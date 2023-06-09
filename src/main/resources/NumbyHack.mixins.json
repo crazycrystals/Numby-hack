@@ -9,7 +9,6 @@
     "EntityAccessor",
     "TotemParticleMixin",
     "meteor.CrystalAuraAccessor",
-    "meteor.DiscordPresenceMixin",
     "meteor.BetterChatMixin"
   ],
   "injectors": {
