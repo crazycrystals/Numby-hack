@@ -12,7 +12,7 @@ import meteordevelopment.meteorclient.utils.world.Dimension;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.packet.s2c.play.DisconnectS2CPacket;
+import net.minecraft.network.packet.s2c.common.DisconnectS2CPacket;
 import net.minecraft.text.Text;
 import net.minecraft.client.network.PlayerListEntry;
 
@@ -159,7 +159,7 @@ public class AutoLogPlus extends Module {
         for (Entity entity : mc.world.getEntities()) {
             if (entity instanceof PlayerEntity && entity.getUuid() != mc.player.getUuid()) {
                 if (onlyTrusted.get() && entity != mc.player && !Friends.get().isFriend((PlayerEntity) entity)) {
-                    disconnect(Text.of("[Auto Log+] A non trusted player ["+ entity.getEntityName() +"] has entered your render distance."));
+                    disconnect(Text.of("[Auto Log+] A non trusted player ["+ entity.getName().getString() +"] has entered your render distance."));
                 }
             }
 

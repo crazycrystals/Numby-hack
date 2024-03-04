@@ -18,6 +18,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.chunk.WorldChunk;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.*;
 
@@ -110,7 +111,7 @@ public class NewChunks extends Module {
 			synchronized (newChunks) {
 				for (ChunkPos c : newChunks) {
 					if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) {
-						render(new Box(c.getStartPos(), c.getStartPos().add(16, renderHeight.get(), 16)), newChunksSideColor.get(), newChunksLineColor.get(), shapeMode.get(), event);
+						render(new Box(new Vec3d(c.getStartPos().getX(), c.getStartPos().getY()+renderHeight.get(), c.getStartPos().getZ()), new Vec3d(c.getStartPos().getX()+16, c.getStartPos().getY()+renderHeight.get(), c.getStartPos().getZ()+16)), newChunksSideColor.get(), newChunksLineColor.get(), shapeMode.get(), event);
 					}
 				}
 			}
@@ -120,7 +121,7 @@ public class NewChunks extends Module {
 			synchronized (oldChunks) {
 				for (ChunkPos c : oldChunks) {
 					if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) {
-						render(new Box(c.getStartPos(), c.getStartPos().add(16, renderHeight.get(), 16)), oldChunksSideColor.get(), oldChunksLineColor.get(), shapeMode.get(), event);
+						render(new Box(new Vec3d(c.getStartPos().getX(), c.getStartPos().getY()+renderHeight.get(), c.getStartPos().getZ()), new Vec3d(c.getStartPos().getX()+16, c.getStartPos().getY()+renderHeight.get(), c.getStartPos().getZ()+16)), oldChunksSideColor.get(), oldChunksLineColor.get(), shapeMode.get(), event);
 					}
 				}
 			}
@@ -169,12 +170,12 @@ public class NewChunks extends Module {
 		else if (event.packet instanceof ChunkDataS2CPacket && mc.world != null) {
 			ChunkDataS2CPacket packet = (ChunkDataS2CPacket) event.packet;
 
-			ChunkPos pos = new ChunkPos(packet.getX(), packet.getZ());
+			ChunkPos pos = new ChunkPos(packet.getChunkX(), packet.getChunkZ());
 
-			if (!newChunks.contains(pos) && mc.world.getChunkManager().getChunk(packet.getX(), packet.getZ()) == null) {
+			if (!newChunks.contains(pos) && mc.world.getChunkManager().getChunk(packet.getChunkX(), packet.getChunkZ()) == null) {
 				WorldChunk chunk = new WorldChunk(mc.world, pos);
 				try {
-					chunk.loadFromPacket(packet.getChunkData().getSectionsDataBuf(), new NbtCompound(), packet.getChunkData().getBlockEntities(packet.getX(), packet.getZ()));
+					chunk.loadFromPacket(packet.getChunkData().getSectionsDataBuf(), new NbtCompound(), packet.getChunkData().getBlockEntities(packet.getChunkX(), packet.getChunkZ()));
 				} catch (ArrayIndexOutOfBoundsException e) {
 					return;
 				}

@@ -36,9 +36,7 @@ public class NumbyHack extends MeteorAddon {
 				.set("kdr", NumbyHackStarscript::getKDR)
 				.set("killstreak", NumbyHackStarscript::getKillstreak)
 				.set("highscore", NumbyHackStarscript::getHighscore)
-				.set("brand", NumbyHackStarscript::getServerBrand)
-				.set("crystalsps", NumbyHackStarscript::getCrystalsPs)
-				.set("baritone", NumbyHackStarscript::getBaritoneAction))
+				.set("crystalsps", NumbyHackStarscript::getCrystalsPs))
 		);
 
 		Log("Adding modules...");
